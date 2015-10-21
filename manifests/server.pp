@@ -60,7 +60,7 @@ class zookeeper::server(
        false   => 'stopped',
        default => 'running',
     }
-    service { 'zookeeper':
+    service { 'zookeeper-server':
         ensure     => $zookeeper_ensure,
         require    => [
             Package['zookeeper-server'],
