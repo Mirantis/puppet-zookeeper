@@ -56,7 +56,7 @@ class zookeeper::server(
         target  => '/etc/zookeeper/conf/myid',
     }
 
-    $zookeeper_ensure = = $enabled ? {
+    $zookeeper_ensure = $enabled ? {
        false   => 'stopped',
        default => 'running',
     }
