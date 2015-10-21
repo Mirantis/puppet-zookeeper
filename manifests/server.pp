@@ -81,7 +81,7 @@ class zookeeper::server(
         command => "${cleanup_script} -n ${cleanup_count} >/dev/null",
         hour    => 0,
         user    => 'zookeeper',
-        require => Service['zookeeper'],
+        require => Service['zookeeper-server'],
     }
 
     # if !$cleanup_count, then ensure this cron is absent.
