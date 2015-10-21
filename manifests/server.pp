@@ -10,13 +10,15 @@
 # $cleanup_count       - If this is > 0, this installs a cron to cleanup transaction
 #                        and snapshot logs.  zkCleanup.sh - $cleanup_count will be run daily.
 #                        Default: 10
+# $enabled             - If the server should be started or not
 #
 class zookeeper::server(
     $jmx_port         = $::zookeeper::defaults::jmx_port,
     $cleanup_count    = $::zookeeper::defaults::cleanup_count,
     $cleanup_script   = $::zookeeper::defaults::cleanup_script,
     $default_template = $::zookeeper::defaults::default_template,
-    $log4j_template   = $::zookeeper::defaults::log4j_template
+    $log4j_template   = $::zookeeper::defaults::log4j_template,
+    $enabled          = true
 )
 {
     # need zookeeper common package and config.
@@ -54,8 +56,12 @@ class zookeeper::server(
         target  => '/etc/zookeeper/conf/myid',
     }
 
+    $zookeeper_ensure = = $enabled ? {
+       false   => 'stopped',
+       default => 'running',
+    }
     service { 'zookeeper':
-        ensure     => running,
+        ensure     => $zookeeper_ensure,
         require    => [
             Package['zookeeper-server'],
             File[ $::zookeeper::data_dir],
