@@ -56,6 +56,14 @@ class zookeeper::server(
         target  => '/etc/zookeeper/conf/myid',
     }
 
+    file { "${::zookeeper::data_dir}/version-2":
+      ensure  => directory,
+      owner   => 'zookeeper',
+      group   => 'zookeeper',
+      mode    => 0750,
+      require => File[$::zookeeper::data_dir]
+    }
+
     $zookeeper_ensure = $enabled ? {
        false   => 'stopped',
        default => 'running',
@@ -66,6 +74,7 @@ class zookeeper::server(
             Package['zookeeper-server'],
             File[ $::zookeeper::data_dir],
             File["${::zookeeper::data_dir}/myid"],
+            File["${::zookeeper::data_dir}/version-2"],
         ],
         hasrestart => true,
         hasstatus  => true,
