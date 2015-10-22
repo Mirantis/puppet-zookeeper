@@ -47,7 +47,7 @@ class zookeeper::server(
     }
 
     # Get this host's $myid from the $fqdn in the $zookeeper_hosts hash.
-    $myid = $::zookeeper::hosts[$::fqdn]
+    $myid = $::zookeeper::hosts[$::hostname]
     file { '/etc/zookeeper/conf/myid':
         content => $myid,
     }
