@@ -1,7 +1,7 @@
 # == Class zookeeper::defaults
 # Default zookeeper configs.
 class zookeeper::defaults {
-    $hosts            = { "${::fqdn}" => 1 }
+    $hosts            = { "${::hostname}" => 1 }
 
     $data_dir         = '/var/lib/zookeeper'
     $data_log_dir     = undef
